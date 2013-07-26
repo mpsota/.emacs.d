@@ -10,13 +10,15 @@
 ;(list-packages)
 ; (when (not package-archive-contents) (package-refresh-contents))
 
-(defvar *used-packages* '(magit))
+(defvar *used-packages* '(auto-complete clojure-mode color-theme dash ess fuzzy graphviz-dot-mode js2-mode js2-refactor magit multiple-cursors org org-bullets pastebin php-mode popup s smart-compile tabbar undo-tree w3m yasnippet))
 
 ;; check if the packages is installed; if not, install it.
-;(mapc (lambda (package)
- ;       (or (package-installed-p package)
-  ;          (when (y-or-n-p (format "Package %s is missing. Install it? " package)) 
-   ;             (package-install package))))
-; *used-packages*)
+(mapc (lambda (package)
+       (or (package-installed-p package)
+          (when (y-or-n-p (format "Package %s is missing. Install it? " package))
+             (package-install package))))
+ *used-packages*)
 
 (provide 'mp-melpa)
+
+ 
