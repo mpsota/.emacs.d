@@ -1,0 +1,8 @@
+.directory
+tramp
+ac-files/ac-comphist.dat
+*.el~
+mp-private.el
+elpa/*
+auto-save-list/*
+not-used/*
