@@ -45,9 +45,27 @@
 ;      w32-lwindow-modifier 'super ;; Left Windows key
 ;      w32-rwindow-modifier 'super ;; Right Windows key
 ;      w32-apps-modifier 'hyper)
+
+
+;; Lets use windows key!
+(global-set-key (kbd "s-u") 'delete-backward-char)
+(global-set-key (kbd "s-o") 'delete-forward-char)
+
 (global-set-key (kbd "M-s-j") (lambda () (interactive) (insert "{}") (backward-char 1)))
-(global-set-key (kbd "M-s-k") (lambda () (interactive) (insert "()") (backward-char 1)))
-(global-set-key (kbd "M-s-l") (lambda () (interactive) (insert "[]") (backward-char 1)))
+(defun insert-left-parenthesis ()
+  (interactive) (insert "("))
+(defun insert-right-parenthesis ()
+  (interactive) (insert ")"))
+(global-set-key (kbd "s-j") 'insert-left-parenthesis)
+(global-set-key (kbd "s-k") 'insert-right-parenthesis)
+;; or: ?
+(global-set-key (kbd "M-u") 'insert-left-parenthesis)
+(global-set-key (kbd "M-o") 'insert-right-parenthesis)
+
+(global-set-key (kbd "C-M-j") 'backward-sexp)
+(global-set-key (kbd "C-M-l") 'forward-sexp)
+
+
 ;; undo
 (global-set-key (kbd "M-c") 'undo)  ; was capitalize-word
 ;; microsoft natural ergo keyboard
@@ -107,25 +125,26 @@
 (if window-system 
  (toggle-fullscreen))
 
-; Highlighting
-; highlight region between point and mark
+;; Highlighting
+;; highlight region between point and mark
 (transient-mark-mode t)
-;;  F9             - Load file
-(global-set-key [f9]  'find-file)
 
-;;  F10            - Execute shell command
-;(global-set-key [f10] 'shell-command)
-(global-set-key [f11] 'term)
-;;inne
-(global-set-key [f3] 'kmacro-start-macro)
+(global-set-key [f2] 'kmacro-start-macro)
+(global-set-key [f3] 'kmacro-end-macro)
 (global-set-key [f4] 'kmacro-call-macro)
 
+(global-set-key [f5] 'revert-buffer)
 (global-set-key [f6] 'smart-compile)
-(global-set-key [help] 'info)
-(global-set-key [f5] 'delete-other-windows)
-;(global-set-key [f6] 'other-window)
 (global-set-key [f7] 'replace-string)
 (global-set-key [f8] 'next-error)
+(global-set-key [f9] 'find-file)
+;; (global-set-key [f10] 'shell-command)
+(global-set-key [f11] 'term)
+
+(global-set-key [help] 'info)
+
+
+
 ;(global-set-key [f10] 'delete-frame)
 ;; (global-set-key "\M-0" 'buffer-menu)
 ;; (global-set-key [(control menu)] 'popup-mode-menu)
@@ -171,7 +190,7 @@
 
 ;; w3m as link-opener
  (setq browse-url-browser-function 'browse-url-generic
-       browse-url-generic-program "iceweasel")
+       browse-url-generic-program "firefox")
 
 (defun choose-browser (url &rest args)
   (interactive "sURL: ")
@@ -290,5 +309,38 @@
  '(mode-line ((t (:foreground "black" :background "light slate gray"))))
  '(tool-bar ((((type x w32 mac) (class color)) (:background "light slate gray" :foreground "wheat" :box (:line-width 1 :style released-button))))))
 
- 
+;; grep
+;; (grep-compute-defaults)
+(setq grep-command "grep -nH *.lisp -e \"\"")
+
+(setq scroll-conservatively 10000
+      scroll-step 1)
+
+;; warning about big files - 100MB
+(setq large-file-warning-threshold 100000000)
+
+;; scpaste.el
+ (autoload 'scpaste "scpaste" "Paste the current buffer." t nil)
+ (setq scpaste-http-destination "https://antoszka.pl/p"
+       scpaste-scp-destination "k:/var/www/antoszka.pl/p")
+;; save minibuffer across sessions
+(savehist-mode 1)
+(setq savehist-additional-variables '(search-ring regexp-search-ring))
+;; (setq savehist-file "~/.emacs.d/tmp/savehist")
+
+;; dont warn about undo
+(setq warning-suppress-types '())
+(add-to-list 'warning-suppress-types '(undo discard-info))
+;; Ctrl-K with no kill
+(defun delete-line-no-kill ()
+  (interactive)
+  (delete-region
+   (point)
+   (save-excursion (move-end-of-line 1) (point)))
+  ;;(delete-char 1)
+  )
+(global-set-key (kbd "C-S-k") 'delete-line-no-kill)
+
+(global-set-key [C-mouse-4] 'text-scale-increase)
+(global-set-key [C-mouse-5] 'text-scale-decrease)
 (provide 'mp-settings)

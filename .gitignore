@@ -6,3 +6,6 @@ mp-private.el
 elpa/*
 auto-save-list/*
 not-used/*
+/history
+\#*#
+/ac-comphist.dat

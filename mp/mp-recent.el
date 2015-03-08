@@ -1,3 +1,4 @@
+(require 'cl)
 (require 'recentf)
 (setq recentf-auto-cleanup 'never) ; for TRAMP - never re-check file list for cleanup
 (recentf-mode 1)

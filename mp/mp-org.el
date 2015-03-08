@@ -248,8 +248,22 @@
 
 (setq org-export-latex-hyperref-format "\\ref{%s}")
 (setq org-latex-default-figure-position "!htb")
-;; use org-bullets, bullets as UTF-8 characters
-(require 'org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+;;; use org-bullets, bullets as UTF-8 characters
+;; (require 'org-bullets)
+;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+(unless (boundp 'org-latex-classes)
+  (setq org-latex-classes '()))
+
+(add-to-list 'org-latex-classes
+             '("mp-report" "\\documentclass[12pt]{report}"
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+ 	       ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+	       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+
+;(setq org-latex-pdf-process (quote ("texi2dvi --pdf --clean --verbose
+;--batch %f" "bibtex %b" "texi2dvi --pdf --clean --verbose --batch %f"
+;"texi2dvi --pdf --clean --verbose --batch %f")))
 
 (provide 'mp-org)

@@ -1,7 +1,7 @@
 ;; W3M
-(require 'w3m-load)
-(require 'w3m-e21)
-(provide 'w3m-e23)
+;(require 'w3m-load)
+;(require 'w3m-e21)
+;(provide 'w3m-e23)
 ;(global-set-key "\C-xm" 'browse-url-at-point)
 
 ; (autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)

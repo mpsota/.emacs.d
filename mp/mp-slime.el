@@ -2,9 +2,12 @@
 ;;;; slime
 ;;;;
 
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
+;; (load (expand-file-name "~/quicklisp/slime-helper.el"))
+;(add-to-list 'load-path "~/.software/slime/")
+(require 'slime-autoloads)
 ;(setq inferior-lisp-program "/usr/local/bin/sbcl")
 (setq inferior-lisp-program "lw")
+(setq slime-contribs '(slime-fancy))
 
 ;(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 (setq slime-lisp-implementations '())
@@ -13,10 +16,10 @@
 (add-to-list 'slime-lisp-implementations '(sbcl ("sbcl")))
 
 ;(slime-setup)
-(slime-setup '(slime-fancy slime-asdf slime-tramp))
+;; (slime-setup '(slime-fancy ));;slime-asdf slime-tramp
 
 (defvar *my-server*
- "/ssh:server:")
+ "/ssh:fractal1:")
 
 (defun server-home()
   (interactive)
@@ -86,6 +89,9 @@
                  ;       (lambda (filename)
                  ;         filename))
                  ; slime-filename-translations)
+                 ;(push (slime-create-filename-translator :machine-instance "fractal1" ;; good one
+                 ;                                        :username "user")
+                 ;      slime-filename-translations)
 		 ;(push (list "[machine-instance]"
 		 ;	     (lambda (filename)
 		 ;	       (subseq filename (length *my-server*)))
@@ -105,12 +111,18 @@
 (defun lw ()
   (interactive)
   (slime 'lw)
+  ;(global-log4slime-mode 1)
 )
 
 (defun sbcl ()
   (interactive)
-  (slime 'sbcl))
+  (slime 'sbcl)
+  ;(global-log4slime-mode 1)
+)
 
-(require 'js-expander)
+;(load "~/quicklisp/log4slime-setup.el")
+
+
+; (require 'js-expander)
 
 (provide 'mp-slime)
