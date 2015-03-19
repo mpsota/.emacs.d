@@ -29,31 +29,18 @@
 (require 'mp-shell)
 (require 'mp-slime) 
 ;;(require 'fuzzy)
-;popmenu
-;; (require 'mp-ac) ;auto-complete mode
-;; C++ 
+(defun c-c++-ac-mode ()
+  (require 'mp-ac) ;auto-complete mode
+  (require 'mp-yasnippet)
+  (require 'mp-cedet)
+  )
+;; Auto complete just for C&C++
+(add-hook 'c++-mode-hook #'c-c++-ac-mode)
+(add-hook 'c-mode-hook #'c-c++-ac-mode)
 
-;;(defun ac-c++-mode ()
-;;  (require 'auto-complete)
-;;  (require 'auto-complete-config)
-;;  (ac-config-default)
-;;  (require 'yasnippet)
-;;  (yas-global-mode 1)
-;;  (require 'auto-complete-c-headers)
-;;  (add-to-list 'achead:include-directories "/usr/include/c++/4.8")
-;;  (add-to-list 'achead:include-directories "/usr/include/x86_64-linux-gnu/c++/4.8")
-;;  (add-to-list 'achead:include-directories "/usr/include/c++/4.8/backward")
-;;  (add-to-list 'achead:include-directories "/usr/lib/gcc/x86_64-linux-gnu/4.8/include")
-;;  (add-to-list 'achead:include-directories "/usr/local/include")
-;;  (add-to-list 'achead:include-directories "/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed")
-;;  (add-to-list 'achead:include-directories "/usr/include/x86_64-linux-gnu")
-;;  (add-to-list 'achead:include-directories "/usr/include")
-;;
-;;  (add-to-list 'ac-sources 'ac-source-c-headers))
-;;(add-hook 'c++-mode-hook #'ac-c++-mode)
-;;(add-hook 'c-mode-hook #'ac-c++-mode)
+;; Edit multiple regions in the same way simultaneously.
+(require 'iedit) ;; C-;
 
-;;
 ;; (require 'undo-tree)
 ;; (global-undo-tree-mode)
 ;;(require 'ergo-movement-mode)
@@ -66,9 +53,6 @@
 ;; (require 'mp-php)
 ;; (require 'mp-erlang)
 ;; (require 'mp-python)
-;; (require 'yasnippet) ;; not yasnippet-bundle
-;(yas/initialize)
-;(yas/load-directory "~/.emacs.d/yasnippet/snippets")
 (require 'mp-c-c++)
 (require 'mp-erc)
 (require 'paste2)
