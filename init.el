@@ -29,14 +29,15 @@
 (require 'mp-shell)
 (require 'mp-slime) 
 ;;(require 'fuzzy)
-(defun c-c++-ac-mode ()
-  (require 'mp-ac) ;auto-complete mode
-  (require 'mp-yasnippet)
-  (require 'mp-cedet)
-  )
+
+;; (defun c-c++-ac-mode ()
+(require 'mp-ac) ;auto-complete mode
+(require 'mp-yasnippet)
+(require 'mp-cedet)
+;; )
 ;; Auto complete just for C&C++
-(add-hook 'c++-mode-hook #'c-c++-ac-mode)
-(add-hook 'c-mode-hook #'c-c++-ac-mode)
+;;(add-hook 'c++-mode-hook #'c-c++-ac-mode)
+;;(add-hook 'c-mode-hook #'c-c++-ac-mode)
 
 ;; Edit multiple regions in the same way simultaneously.
 (require 'iedit) ;; C-;
@@ -53,6 +54,7 @@
 ;; (require 'mp-php)
 ;; (require 'mp-erlang)
 ;; (require 'mp-python)
+
 (require 'mp-c-c++)
 (require 'mp-erc)
 (require 'paste2)
