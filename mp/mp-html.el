@@ -11,4 +11,6 @@
 (add-hook 'sgml-mode-hook '--setup-simplezen)
 ;; (add-hook 'sgml-mode-hook 'zencoding-mode) ;; Auto-start on any markup modes
 
+(add-to-list 'auto-mode-alist '("\\.tmpl$" . html-mode))
+
 (provide 'mp-html)

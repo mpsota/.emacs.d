@@ -1,5 +1,6 @@
-;https://github.com/magnars/.emacs.d/blob/master/setup-slime-js.el
-;(push "~/.emacs.d/js2/" load-path)
+;; https://github.com/magnars/.emacs.d/blob/master/setup-slime-js.el
+;; (push "~/.emacs.d/js2/" load-path)
+;; to make it work: npm install -g swank-js
 (push "~/.emacs.d/slime-js/" load-path)
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))

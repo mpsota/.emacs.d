@@ -17,8 +17,8 @@
 ;(setq uniquify-buffer-name-style 'post-forward
 ;      uniquify-separator ":")
 (require 'mp-colors)
-(faces_x)
-(setq ispell-dictionary "american") 
+(faces-x)
+(setq ispell-dictionary "american")
 ;;;;
 (require 'mp-ido)
 (require 'tabbar-init)
@@ -27,13 +27,13 @@
 ;;; (setq compilation-ask-about-save nil
 ;;;       compilation-window-height 15)
 (require 'mp-shell)
-(require 'mp-slime) 
+(require 'mp-slime)
 ;;(require 'fuzzy)
 
 ;; (defun c-c++-ac-mode ()
-(require 'mp-ac) ;auto-complete mode
-(require 'mp-yasnippet)
-(require 'mp-cedet)
+;(require 'mp-ac) ;auto-complete mode
+;(require 'mp-yasnippet)
+;(require 'mp-cedet)
 ;; )
 ;; Auto complete just for C&C++
 ;;(add-hook 'c++-mode-hook #'c-c++-ac-mode)
@@ -73,6 +73,8 @@
 (require 'magit-svn)
 (require 'binview)
 (require 'mp-utilities)
+;; (require 'mp-haskell)
+
 (dotfile .emacs "./.emacs.d/init.el")
 
 (when (file-exists-p "~/.emacs.d/mp/mp-private.el")
@@ -90,6 +92,7 @@
  '(ac-sources
    (quote
     (ac-source-yasnippet ac-source-imenu ac-source-abbrev ac-source-words-in-buffer ac-source-files-in-current-dir ac-source-filename)) t)
+ '(better-registers-use-C-r nil)
  '(column-number-mode t)
  '(display-time-mode t)
  '(erc-generate-log-file-name-function (quote erc-generate-log-file-name-long))
@@ -147,7 +150,45 @@
  '(remember-handler-functions (quote (org-remember-handler)))
  '(safe-local-variable-values
    (quote
-    ((Package . GLISP)
+    ((Package . CL-FAD)
+     (eval put
+           (quote debug)
+           (quote common-lisp-indent-function)
+           0)
+     (eval put
+           (quote deftype*)
+           (quote common-lisp-indent-function)
+           (quote
+            (4 &lambda &body)))
+     (eval put
+           (quote defun*)
+           (quote common-lisp-indent-function)
+           (quote
+            (4 &lambda &body)))
+     (eval put
+           (quote defstruct*)
+           (quote common-lisp-indent-function)
+           (quote
+            ((&whole 4 &rest
+                     (&whole 2 &rest 1))
+             &rest
+             (&whole 2 &rest 1))))
+     (eval put
+           (quote defstatic*)
+           (quote common-lisp-indent-function)
+           (quote
+            (4 2 2)))
+     (eval put
+           (quote defshared*)
+           (quote common-lisp-indent-function)
+           (quote
+            (4 2 2)))
+     (eval put
+           (quote defvar*)
+           (quote common-lisp-indent-function)
+           (quote
+            (4 2 2)))
+     (Package . GLISP)
      (Package . LALR)
      (Package . SGML)
      (Syntax . Common-Lisp)
@@ -157,12 +198,13 @@
      (Base . 10)
      (Syntax . ANSI-Common-Lisp))))
  '(show-paren-mode t))
+(require 'better-registers)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "black" :foreground "wheat" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 98 :width normal :foundry "unknown" :family "Monospace"))))
+ '(default ((t (:foreground "wheat" :background "black" :family "Bitstream Vera Sans Mono" :foundry "bitstream" :slant normal :weight normal :height 98 :width normal))))
  '(flyspell-duplicate ((t (:foreground "Gold3" :underline t :weight normal))))
  '(flyspell-incorrect ((t (:foreground "OrangeRed" :underline t :weight normal))))
  '(font-lock-comment-face ((t (:foreground "SteelBlue1"))))
@@ -176,7 +218,7 @@
  '(tool-bar ((((type x w32 mac) (class color)) (:background "light slate gray" :foreground "wheat" :box (:line-width 1 :style released-button))))))
 
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-(font-lock-add-keywords 
+(font-lock-add-keywords
  'c++-mode
  '(("^[^\n]\\{80\\}\\(.*\\)$"
     1 font-lock-warning-face prepend)))

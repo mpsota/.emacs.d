@@ -266,4 +266,8 @@
 ;--batch %f" "bibtex %b" "texi2dvi --pdf --clean --verbose --batch %f"
 ;"texi2dvi --pdf --clean --verbose --batch %f")))
 
+;; timing
+(setq org-time-clocksum-format
+      '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
+
 (provide 'mp-org)

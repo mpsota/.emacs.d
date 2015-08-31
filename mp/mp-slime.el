@@ -11,9 +11,9 @@
 
 ;(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 (setq slime-lisp-implementations '())
-(add-to-list 'slime-lisp-implementations '(ccl ("~/.svn/ccl/lx86cl")))
+(add-to-list 'slime-lisp-implementations '(ccl ("ccl")))
 (add-to-list 'slime-lisp-implementations '(lw ("lw-console")))
-(add-to-list 'slime-lisp-implementations '(sbcl ("sbcl")))
+(add-to-list 'slime-lisp-implementations '(sbcl ("sbcl" "--dynamic-space-size" "5024")))
 
 ;(slime-setup)
 ;; (slime-setup '(slime-fancy ));;slime-asdf slime-tramp
@@ -35,11 +35,11 @@
 (add-to-list 'auto-mode-alist '("\\.lisp$" . lisp-mode))
 (add-to-list 'auto-mode-alist '("\\.svhd$" . lisp-mode))
 (add-to-list 'auto-mode-alist '("\\.cl$" . lisp-mode))
- 
+
 (make-directory "/tmp/slime-fasls/" t)
 
 (eval-after-load "slime"
-  '(progn 
+  '(progn
      (setq slime-complete-symbol*-fancy t
 	   slime-complete-symbol-function 'slime-fuzzy-complete-symbol
 	   slime-when-complete-filename-expand t
@@ -52,8 +52,8 @@
 	;   lisp-loop-keyword-indentation 2
          ;  lisp-loop-forms-indentation 2
 	 ;  )
-     (add-hook 'slime-connected-hook 
-	       (lambda () 
+     (add-hook 'slime-connected-hook
+	       (lambda ()
 		 (define-key slime-repl-mode-map (kbd "C-c ;")
 		   'slime-insert-balanced-comments)
 		 (define-key slime-repl-mode-map (kbd "C-c M-;")
@@ -76,7 +76,7 @@
 		 (define-key slime-mode-map (kbd "<f7>") 'slime-eval-defun)
 		 (define-key slime-mode-map (kbd "C-c h") 'hs-hide-block)
                  (define-key slime-mode-map (kbd "C-c s") 'hs-show-block)
-  
+
 
 		 (define-key slime-mode-map (kbd "RET") 'newline-and-indent)
 		 (define-key slime-mode-map (kbd "C-c C-k") 'slime-compile-and-load-file)
@@ -120,8 +120,26 @@
   ;(global-log4slime-mode 1)
 )
 
-;(load "~/quicklisp/log4slime-setup.el")
+(load "~/quicklisp/log4slime-setup.el")
+(global-log4slime-mode 1)
 
+
+;; colorize
+(let ((optional-symbol "\\(\\(\\(\\sw\\|\\s_\\)+\\)?\\)"))
+  (cl-flet ((regexp (def) (concat "^\\s-*(" def "\\>\\s-*" optional-symbol)))
+    ;; Fontify defconst and define-flag as defvar.
+    (let ((def "\\(defstatic\\|defstatic*\\)"))
+      (font-lock-add-keywords 'lisp-mode
+                              `((,(regexp def)
+                                 (1 font-lock-keyword-face)
+                                 (2 font-lock-variable-name-face)))))
+    ;; Fontify com.gigamonkeys.foo.html:define-html-macro and
+    ;; hu.dwim.stefil:deftest as defun.
+    (let ((def "\\(defun\\*\\|deftest\\)"))
+      (font-lock-add-keywords 'lisp-mode
+                              `((,(regexp def)
+                                 (1 font-lock-keyword-face)
+                                 (2 font-lock-function-name-face)))))))
 
 ; (require 'js-expander)
 

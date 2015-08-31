@@ -10,7 +10,7 @@
 ;(list-packages)
 ; (when (not package-archive-contents) (package-refresh-contents))
 
-(defvar *used-packages* '(auto-complete clojure-mode color-theme dash ess fuzzy graphviz-dot-mode js2-mode js2-refactor magit magit-svn multiple-cursors org org-bullets pastebin php-mode popup s smart-compile tabbar undo-tree w3m yasnippet auto-complete-c-headers slime scpaste helm iedit))
+(defvar *used-packages* '(auto-complete clojure-mode color-theme dash ess fuzzy graphviz-dot-mode js2-mode js2-refactor magit magit-svn multiple-cursors org org-bullets pastebin php-mode popup s smart-compile tabbar undo-tree w3m yasnippet auto-complete-c-headers slime scpaste helm iedit haskell-mode ghc better-registers))
 
 ;; check if the packages is installed; if not, install it.
 (mapc (lambda (package)
@@ -20,5 +20,3 @@
  *used-packages*)
 
 (provide 'mp-melpa)
-
- 
