@@ -28,6 +28,7 @@
 ;;;       compilation-window-height 15)
 (require 'mp-shell)
 (require 'mp-slime)
+;; (require 'mp-sly)
 ;;(require 'fuzzy)
 
 ;; (defun c-c++-ac-mode ()
@@ -50,19 +51,22 @@
 (require 'mp-org)
 ;; (require 'mp-js)
 (require 'mp-html)
+(require 'mp-web)
 ;; (require 'mp-clojure)
 ;; (require 'mp-php)
 ;; (require 'mp-erlang)
-;; (require 'mp-python)
+(require 'mp-python)
 
 (require 'mp-c-c++)
-(require 'mp-erc)
+;; (require 'mp-erc)
 (require 'paste2)
 (require 'light-symbol)
 (light-symbol-mode t)
 
 (require 'ess-site)
 (require 'ess-eldoc)
+;;(require 'auto-complete)
+
 (require 'graphviz-dot-mode)
 (setq max-specpdl-size 60000)
 (setq max-lisp-eval-depth 10000)
@@ -70,7 +74,6 @@
 (add-hook 'org-mode-hook '(lambda ()
                             (auto-fill-mode 1)))
 (require 'magit)
-(require 'magit-svn)
 (require 'binview)
 (require 'mp-utilities)
 ;; (require 'mp-haskell)
@@ -150,7 +153,27 @@
  '(remember-handler-functions (quote (org-remember-handler)))
  '(safe-local-variable-values
    (quote
-    ((Package . CL-FAD)
+    ((eval progn
+           (unless
+               (boundp
+                (quote org-latex-classes))
+             (setq org-latex-classes
+                   (quote nil)))
+           (add-to-list
+            (quote org-latex-classes)
+            (quote
+             ("mp-report" "\\documentclass[12pt]{report}"
+              ("\\chapter{%s}" . "\\chapter*{%s}")
+              ("\\section{%s}" . "\\section*{%s}")
+              ("\\subsection{%s}" . "\\subsection*{%s}")
+              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))))
+     (eval put
+           (quote defclass*)
+           (quote common-lisp-indent-function)
+           (quote
+            (4 &lambda &body)))
+     (Package . CCL)
+     (Package . CL-FAD)
      (eval put
            (quote debug)
            (quote common-lisp-indent-function)

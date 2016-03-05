@@ -133,22 +133,37 @@
 
 (eval-after-load 'org-export-latex
 '(progn (add-to-list 'org-export-latex-classes
-             `("aghdpl" "\\documentclass{aghdpl}"
-               ("\\part{%s}" . "\\part*{%s}")
-               ("\\chapter{%s}" . "\\chapter*{%s}")
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
-(add-to-list 'org-export-latex-classes
-	     '("my-report" "\\documentclass[11pt]{report}" 
-	       ;("\\part{%s}" . "\\part*{%s}") 
-	       ("\\chapter{%s}" . "\\chapter*{%s}") 
-	       ("\\section{%s}" . "\\section*{%s}")
-	       ("\\subsection{%s}" . "\\subsection*{%s}")
-	       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                     `("aghdpl" "\\documentclass{aghdpl}"
+                       ("\\part{%s}" . "\\part*{%s}")
+                       ("\\chapter{%s}" . "\\chapter*{%s}")
+                       ("\\section{%s}" . "\\section*{%s}")
+                       ("\\subsection{%s}" . "\\subsection*{%s}")
+                       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+        (add-to-list 'org-export-latex-classes
+                     '("my-report" "\\documentclass[11pt]{report}" 
+                                        ;("\\part{%s}" . "\\part*{%s}") 
+                       ("\\chapter{%s}" . "\\chapter*{%s}") 
+                       ("\\section{%s}" . "\\section*{%s}")
+                       ("\\subsection{%s}" . "\\subsection*{%s}")
+                       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
 	       
 
-))))
+                       ))
+        (add-to-list 'org-export-latex-classes
+                     '("article" "\\documentclass[11pt]{article}"
+                       ("\\section{%s}" . "\\section*{%s}")
+                       ("\\subsection{%s}" . "\\subsection*{%s}")
+                       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                       ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+        (add-to-list 'org-latex-classes
+                     '("extarticle" "\\documentclass[12pt]{extarticle}"
+                       ("\\section{%s}" . "\\section*{%s}")
+                       ("\\subsection{%s}" . "\\subsection*{%s}")
+                       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                       ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+        ))
 (setq org-export-latex-title-command "ble")
   
              
@@ -158,7 +173,6 @@
 
 
  ;("aghdpl" "\\documentclass{aghdpl}" ("\\part{%s}" . "\\part*{%s}") ("\\chapter{%s}" . "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
- ;("article" "\\documentclass[11pt]{article}" ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}") ("\\paragraph{%s}" . "\\paragraph*{%s}") ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
  ;("report" "\\documentclass[11pt]{report}" ("\\part{%s}" . "\\part*{%s}") ("\\chapter{%s}" . "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
  ;("book" "\\documentclass[11pt]{book}" ("\\part{%s}" . "\\part*{%s}") ("\\chapter{%s}" . "\\chapter*{%s}") ("\\section{%s}" . "\\section*{%s}") ("\\subsection{%s}" . "\\subsection*{%s}") ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))
  ;("beamer" "\\documentclass{beamer}" org-beamer-sectioning))
@@ -262,6 +276,22 @@
                ("\\subsection{%s}" . "\\subsection*{%s}")
 	       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
 
+(add-to-list 'org-latex-classes
+             '("article" "\\documentclass[11pt]{article}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+(add-to-list 'org-latex-classes
+             '("extarticle" "\\documentclass[12pt]{extarticle}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
 ;(setq org-latex-pdf-process (quote ("texi2dvi --pdf --clean --verbose
 ;--batch %f" "bibtex %b" "texi2dvi --pdf --clean --verbose --batch %f"
 ;"texi2dvi --pdf --clean --verbose --batch %f")))
@@ -269,5 +299,12 @@
 ;; timing
 (setq org-time-clocksum-format
       '(:hours "%d" :require-hours t :minutes ":%02d" :require-minutes t))
+
+;; gnuplot
+;; active Babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((gnuplot . t)))
+;; add additional languages with '((language . t)))
 
 (provide 'mp-org)

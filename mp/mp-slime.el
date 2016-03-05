@@ -6,8 +6,8 @@
 ;(add-to-list 'load-path "~/.software/slime/")
 (require 'slime-autoloads)
 ;(setq inferior-lisp-program "/usr/local/bin/sbcl")
-(setq inferior-lisp-program "lw")
-(setq slime-contribs '(slime-fancy))
+;; (setq inferior-lisp-program "lw")
+(setq slime-contribs '(slime-fancy slime-company))
 
 ;(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 (setq slime-lisp-implementations '())
@@ -17,6 +17,10 @@
 
 ;(slime-setup)
 ;; (slime-setup '(slime-fancy ));;slime-asdf slime-tramp
+;(define-key company-active-map (kbd "\C-n") 'company-select-next)
+;(define-key company-active-map (kbd "\C-p") 'company-select-previous)
+;(define-key company-active-map (kbd "\C-d") 'company-show-doc-buffer)
+;(define-key company-active-map (kbd "M-.") 'company-show-location)
 
 (defvar *my-server*
  "/ssh:fractal1:")
@@ -70,6 +74,8 @@
 		 (define-key slime-repl-mode-map (kbd "^q") 'slime-selector)
 		 (define-key slime-mode-map (kbd "<f10>")
 		   (lambda () (interactive) (slime-inspect "*")))
+                 (define-key slime-repl-mode-map (kbd "<f10>")
+		   (lambda () (interactive) (slime-inspect "*")))
 		 (define-key slime-mode-map (kbd "<f12>") 'slime-selector)
 		 (define-key slime-repl-mode-map (kbd "<f12>") 'slime-selector)
 		 (define-key slime-mode-map (kbd "<f6>") 'slime-eval-buffer)
@@ -108,20 +114,34 @@
 (setq slime-repl-history-remove-duplicates t)
 (setq slime-repl-history-trim-whitespaces t)
 
+(setq slime-threads-update-interval 0.5)
+
+(defun ccl ()
+  (interactive)
+  (slime 'ccl))
+
 (defun lw ()
   (interactive)
-  (slime 'lw)
-  ;(global-log4slime-mode 1)
-)
+  (slime 'lw))
 
 (defun sbcl ()
   (interactive)
-  (slime 'sbcl)
-  ;(global-log4slime-mode 1)
-)
+  (slime 'sbcl))
 
+;; (:ql :log4slime) (log4slime:install)  is needed by log4slime mode
 (load "~/quicklisp/log4slime-setup.el")
 (global-log4slime-mode 1)
+
+(defun toggle-current-window-dedication ()
+ (interactive)
+ (let* ((window    (selected-window))
+        (dedicated (window-dedicated-p window)))
+   (set-window-dedicated-p window (not dedicated))
+   (message "Window %sdedicated to %s"
+            (if dedicated "no longer " "")
+            (buffer-name))))
+
+(global-set-key [pause] 'toggle-current-window-dedication)
 
 
 ;; colorize
@@ -135,12 +155,22 @@
                                  (2 font-lock-variable-name-face)))))
     ;; Fontify com.gigamonkeys.foo.html:define-html-macro and
     ;; hu.dwim.stefil:deftest as defun.
-    (let ((def "\\(defun\\*\\|deftest\\)"))
+    (let ((def "\\(defun\\*\\|deftest\\|def-test\\)"))
       (font-lock-add-keywords 'lisp-mode
                               `((,(regexp def)
                                  (1 font-lock-keyword-face)
                                  (2 font-lock-function-name-face)))))))
 
-; (require 'js-expander)
+;(font-lock-add-keywords 'lisp-mode
+;  '(("foo*" . font-lock-function-name-face)))
+
+;; (require 'js-expander)
+
+;; todo use elmacro
+;(setf fset 'setf-in-let
+;   [C-M-left right ?s ?e ?t ?f ?  C-M-left left C-M-right ?\C-x ?\C-e C-M-left right ?\C-  C-M-right ?\C-w delete left C-M-right])
+
+(add-hook 'lisp-mode-hook ;; remove trailing whitespaces before save.
+          (lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
 
 (provide 'mp-slime)

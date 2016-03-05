@@ -18,7 +18,7 @@
 ;; Flash instead of that annoying bell
 (setq visible-bell t)
 ;; scroll-bar on the left, like in old emacs
-(set-scroll-bar-mode 'left) 
+(set-scroll-bar-mode 'left)
 ;; Remove icons toolbar
 (if (> emacs-major-version 20)
     (tool-bar-mode -1))
@@ -32,7 +32,7 @@
 ;przewijanei normalne
 (setq scroll-conservatively 1)
 ;lepsze zarzadzanie bufforami
-(iswitchb-mode t)
+;; (iswitchb-mode t)
 ;; make cursor movement keys under right hand's home-row.
 (global-set-key (kbd "M-i") 'previous-line) ; was tab-to-tab-stop
 (global-set-key (kbd "M-j") 'backward-char) ; was indent-new-comment-line
@@ -70,8 +70,8 @@
 (global-set-key (kbd "M-c") 'undo)  ; was capitalize-word
 ;; microsoft natural ergo keyboard
 (global-set-key (kbd "<XF86Forward>") 'other-window)
-(global-set-key (kbd "<XF86Back>") (lambda () 
-				     (interactive) 
+(global-set-key (kbd "<XF86Back>") (lambda ()
+				     (interactive)
 				     (other-window -1)))
 ;; resizing window
 (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
@@ -107,8 +107,8 @@
     (split-window-horizontally)
     (set-window-buffer (next-window) (other-buffer))
     (select-window (next-window)))
- 
-(global-set-key "\C-x2" 'my-split-window-vertically) 
+
+(global-set-key "\C-x2" 'my-split-window-vertically)
 (global-set-key "\C-x3" 'my-split-window-horizontally)
 
 (defadvice my-window-splitting-advice
@@ -122,7 +122,7 @@
 			 '(2 "_NET_WM_STATE_MAXIMIZED_VERT" 0))
   (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
 	    		 '(2 "_NET_WM_STATE_MAXIMIZED_HORZ" 0)))
-(if window-system 
+(if window-system
  (toggle-fullscreen))
 
 ;; Highlighting
@@ -152,7 +152,7 @@
 (global-set-key [(shift delete)] 'clipboard-kill-region)
 (global-set-key [(control insert)] 'clipboard-kill-ring-save)
 ;(global-set-key [(control x) r j] 'bookmark-jump)
- 
+
 ;; (global-set-key [(control tab)] `other-window)
 ;; (defun switch-to-other-buffer () (interactive) (switch-to-buffer (other-buffer)))
 (global-set-key [(meta g)] 'goto-line)
@@ -160,7 +160,7 @@
 ;;; This was installed by package-install.el.
 ;;; This provides support for the package system and
 ;;; interfacing with ELPA, the package archive.
-;; Make C-h a to search in all symbols, not only in interactive functions. 
+;; Make C-h a to search in all symbols, not only in interactive functions.
 (define-key help-map "a" 'apropos)
 
 (defun stop-using-minibuffer () ;http://trey-jackson.blogspot.com/2010/04/emacs-tip-36-abort-minibuffer-when.html
@@ -174,12 +174,12 @@
   (let ((greek '("alpha" "beta" "gamma" "delta" "epsilon" "zeta" "eta" "theta" "iota" "kappa" "lambda" "mu" "nu" "xi" "omicron" "pi" "rho" "sigma_final" "sigma" "tau" "upsilon" "phi" "chi" "psi" "omega")))
     (loop for word in greek
           for code = 97 then (+ 1 code)
-          do  (let ((greek-char (make-char 'greek-iso8859-7 code))) 
+          do  (let ((greek-char (make-char 'greek-iso8859-7 code)))
                 (font-lock-add-keywords nil
                                         `((,(concatenate 'string "\\(^\\|[^a-zA-Z0-9]\\)\\(" word "\\)[a-zA-Z]")
                                            (0 (progn (decompose-region (match-beginning 2) (match-end 2))
                                                      nil)))))
-                (font-lock-add-keywords nil 
+                (font-lock-add-keywords nil
                                         `((,(concatenate 'string "\\(^\\|[^a-zA-Z0-9]\\)\\(" word "\\)[^a-zA-Z]")
                                            (0 (progn (compose-region (match-beginning 2) (match-end 2)
                                                                      ,greek-char)
@@ -196,11 +196,11 @@
   (interactive "sURL: ")
   (if (y-or-n-p "Use external browser? ")
       (browse-url-generic url)
-      (progn 
+      (progn
         (my-split-window-horizontally)
         (w3m-browse-url url)
         ;; (select-window (previous-window))
-        
+
         )))
 
 (setq browse-url-browser-function 'choose-browser)
@@ -389,6 +389,26 @@
 ;;(global-set-key [(super shift left)] (defun insert-left-arrow-command (arg)
 ;;                                       (interactive "P")
 ;;                                      (insert-char ?\u2190 arg)))
+
+;; neo tree
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+
+;; slime like navigation for elisp
+;(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+;  (require 'elisp-slime-nav)
+;  (add-hook hook 'turn-on-elisp-slime-nav-mode))
+
+
+(defun my-minibuffer-setup-hook ()
+  (setq gc-cons-threshold most-positive-fixnum))
+
+(defun my-minibuffer-exit-hook ()
+  (setq gc-cons-threshold 800000))
+
+(add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
+(add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
+
 
 
 (provide 'mp-settings)

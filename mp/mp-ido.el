@@ -56,7 +56,7 @@
 
 (defvar stesla-hated-buffer-regexps '("^ " "*Buffer" "^\\*trace" "^\\*tramp"))
 
- (setq iswitchb-buffer-ignore (append stesla-hated-buffer-regexps  stesla-hated-buffers))
+ ;; (setq iswitchb-buffer-ignore (append stesla-hated-buffer-regexps  stesla-hated-buffers))
 
  (defmacro stesla-buffer-regexp-mapcar (regexp buffers)
   "Find BUFFERS whose name matches REGEXP"

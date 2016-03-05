@@ -11,6 +11,9 @@
 		    (cons (file-name-nondirectory x)
 			  x))
 		  recentf-list))
+         (filename-list-no-duplicates
+	  (remove-duplicates file-assoc-list
+			     :test #'string= :key #'cdr))
 	 (filename-list
 	  (remove-duplicates (mapcar #'car file-assoc-list)
 			     :test #'string=))
