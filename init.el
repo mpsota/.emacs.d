@@ -28,6 +28,7 @@
 ;;;       compilation-window-height 15)
 (require 'mp-shell)
 (require 'mp-slime)
+(require 'flymd) ;; markdown realtime preview, use flymd-flyit function.
 ;; (require 'mp-sly)
 ;;(require 'fuzzy)
 
@@ -65,7 +66,7 @@
 
 (require 'ess-site)
 (require 'ess-eldoc)
-;;(require 'auto-complete)
+(require 'auto-complete)
 
 (require 'graphviz-dot-mode)
 (setq max-specpdl-size 60000)
@@ -77,6 +78,7 @@
 (require 'binview)
 (require 'mp-utilities)
 ;; (require 'mp-haskell)
+(require 'calfw-ical)
 
 (dotfile .emacs "./.emacs.d/init.el")
 
@@ -220,7 +222,8 @@
      (Syntax . COMMON-LISP)
      (Base . 10)
      (Syntax . ANSI-Common-Lisp))))
- '(show-paren-mode t))
+ '(show-paren-mode t)
+ '(slime-company-completion (quote fuzzy)))
 (require 'better-registers)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
