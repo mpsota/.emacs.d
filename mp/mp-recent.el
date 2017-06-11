@@ -2,7 +2,7 @@
 (require 'recentf)
 (setq recentf-auto-cleanup 'never) ; for TRAMP - never re-check file list for cleanup
 (recentf-mode 1)
-(setq recentf-max-saved-items 50)
+(setq recentf-max-saved-items 150)
 (defun recentf-ido-find-file ()
   "Find a recent file using Ido."
   (interactive)
