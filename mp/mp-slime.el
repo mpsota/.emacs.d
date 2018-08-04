@@ -3,24 +3,26 @@
 ;;;;
 
 ;; (load (expand-file-name "~/quicklisp/slime-helper.el"))
-;(add-to-list 'load-path "~/.software/slime/")
-(require 'slime-autoloads)
-;(setq inferior-lisp-program "/usr/local/bin/sbcl")
-;; (setq inferior-lisp-program "lw")
+(setq inferior-lisp-program "sbcl")
 (setq slime-contribs '(slime-fancy slime-company))
 
-;(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+(slime-setup '(slime-fancy slime-company))
+
+(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 (setq slime-lisp-implementations '())
 (add-to-list 'slime-lisp-implementations '(ccl ("ccl")))
 (add-to-list 'slime-lisp-implementations '(lw ("lw-console")))
-(add-to-list 'slime-lisp-implementations '(sbcl ("sbcl" "--dynamic-space-size" "5024")))
+(add-to-list 'slime-lisp-implementations '(lw2 ("/usr/local/lib64/LispWorks/lispworks-7-0-0-amd64-linux")))
+(add-to-list 'slime-lisp-implementations '(abcl ("~/.software/abcl-bin-1.3.3/abcl.jar")))
+(add-to-list 'slime-lisp-implementations '(sbcl ("sbcl" "--control-stack-size" "400" "--dynamic-space-size" "8000")))
+(add-to-list 'slime-lisp-implementations '(sbcl-min ("sbcl")))
 
 ;(slime-setup)
 ;; (slime-setup '(slime-fancy ));;slime-asdf slime-tramp
-;(define-key company-active-map (kbd "\C-n") 'company-select-next)
-;(define-key company-active-map (kbd "\C-p") 'company-select-previous)
-;(define-key company-active-map (kbd "\C-d") 'company-show-doc-buffer)
-;(define-key company-active-map (kbd "M-.") 'company-show-location)
+(define-key company-active-map (kbd "\C-n") 'company-select-next)
+(define-key company-active-map (kbd "\C-p") 'company-select-previous)
+(define-key company-active-map (kbd "\C-d") 'company-show-doc-buffer)
+(define-key company-active-map (kbd "M-.") 'company-show-location)
 
 (defvar *my-server*
  "/ssh:fractal1:")
@@ -29,16 +31,15 @@
   (interactive)
   (find-file (concat *my-server* "~/")))
 
-(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+;; (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 
-(add-hook 'slime-connected-hook
-          (lambda ()
-            ))
+;;(add-hook 'slime-connected-hook
+;;          (lambda ()
+;;            ))
 
 ;; Common Lisp Mode
-(add-to-list 'auto-mode-alist '("\\.lisp$" . lisp-mode))
-(add-to-list 'auto-mode-alist '("\\.svhd$" . lisp-mode))
-(add-to-list 'auto-mode-alist '("\\.cl$" . lisp-mode))
+;;(add-to-list 'auto-mode-alist '("\\.lisp$" . lisp-mode))
+
 
 (make-directory "/tmp/slime-fasls/" t)
 
@@ -58,10 +59,6 @@
 	 ;  )
      (add-hook 'slime-connected-hook
 	       (lambda ()
-		 (define-key slime-repl-mode-map (kbd "C-c ;")
-		   'slime-insert-balanced-comments)
-		 (define-key slime-repl-mode-map (kbd "C-c M-;")
-		   'slime-remove-balanced-comments)
 		 (define-key slime-mode-map (kbd "C-c ;")
 		   'slime-insert-balanced-comments)
 		 (define-key slime-mode-map (kbd "C-c (")
@@ -69,15 +66,15 @@
 		 (define-key slime-mode-map (kbd "C-c C-c")
 		   'slime-compile-defun)
 		 (define-key slime-mode-map (kbd "TAB")
-		   'slime-indent-and-complete-symbol)
+                                        ;'slime-indent-and-complete-symbol)
+                   'company-complete)
 		 (define-key slime-mode-map (kbd "^q") 'slime-selector)
-		 (define-key slime-repl-mode-map (kbd "^q") 'slime-selector)
+		 ;;(define-key slime-repl-mode-map (kbd "^q") 'slime-selector)
 		 (define-key slime-mode-map (kbd "<f10>")
 		   (lambda () (interactive) (slime-inspect "*")))
-                 (define-key slime-repl-mode-map (kbd "<f10>")
-		   (lambda () (interactive) (slime-inspect "*")))
+                 ;(define-key slime-repl-mode-map (kbd "<f10>")
+		 ;  (lambda () (interactive) (slime-inspect "*")))
 		 (define-key slime-mode-map (kbd "<f12>") 'slime-selector)
-		 (define-key slime-repl-mode-map (kbd "<f12>") 'slime-selector)
 		 (define-key slime-mode-map (kbd "<f6>") 'slime-eval-buffer)
 		 (define-key slime-mode-map (kbd "<f7>") 'slime-eval-defun)
 		 (define-key slime-mode-map (kbd "C-c h") 'hs-hide-block)
@@ -124,13 +121,24 @@
   (interactive)
   (slime 'lw))
 
+(defun lw2 ()
+  (interactive)
+  (slime 'lw2))
+
 (defun sbcl ()
   (interactive)
   (slime 'sbcl))
 
+(defun sbcl-min ()
+  (interactive)
+  (slime 'sbcl-min))
+
+(defun abcl ()
+  (interactive)
+  (slime 'abcl))
+
 ;; (:ql :log4slime) (log4slime:install)  is needed by log4slime mode
-(load "~/quicklisp/log4slime-setup.el")
-(global-log4slime-mode 1)
+
 
 (defun toggle-current-window-dedication ()
  (interactive)
@@ -173,4 +181,13 @@
 (add-hook 'lisp-mode-hook ;; remove trailing whitespaces before save.
           (lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
 
+;; (global-set-key [tab] 'company-complete)
+;; (define-key company-active-map (kbd "<tab>") 'company-complete)
+
+(setq log4slime-mode nil) ;; hack, log4slime references to free variable
+(load "~/quicklisp/log4slime-setup.el")
+(global-log4slime-mode 1)
+
+(setq pop-up-windows t)
+(setq same-window-buffer-names '("*inferior-lisp*" "*slime-xref*"))
 (provide 'mp-slime)

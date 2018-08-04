@@ -3,6 +3,13 @@
 ;;;; URL: http://github.com/mpsota
 
 ;; (setq debug-on-error nil)
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (push "~/.emacs.d/mp/" load-path)
 (push "~/.emacs.d/packages-not-in-melpa/" load-path)
 (require 'mp-melpa)
@@ -53,7 +60,7 @@
 ;; (require 'mp-js)
 (require 'mp-html)
 (require 'mp-web)
-;; (require 'mp-clojure)
+(require 'mp-clojure)
 ;; (require 'mp-php)
 ;; (require 'mp-erlang)
 (require 'mp-python)
@@ -78,7 +85,7 @@
 (require 'binview)
 (require 'mp-utilities)
 ;; (require 'mp-haskell)
-(require 'calfw-ical)
+;; (require 'calfw-ical)
 
 (dotfile .emacs "./.emacs.d/init.el")
 
@@ -98,6 +105,7 @@
    (quote
     (ac-source-yasnippet ac-source-imenu ac-source-abbrev ac-source-words-in-buffer ac-source-files-in-current-dir ac-source-filename)) t)
  '(better-registers-use-C-r nil)
+ '(coffee-tab-width 2)
  '(column-number-mode t)
  '(display-time-mode t)
  '(erc-generate-log-file-name-function (quote erc-generate-log-file-name-long))
@@ -151,6 +159,12 @@
   %u" "~/todo.org" "Tasks")
      (110 "* %u %?" "~/notes.org" "Notes"))))
  '(org-reverse-note-order t)
+ '(package-selected-packages
+   (quote
+    (cider projectile imenu-anywhere imenu-list web-mode w3m undo-tree tabbar smart-compile slime-company scpaste recentf-ext php-mode pastebin org-bullets ob-cypher nvm nodejs-repl neotree monky markdown-mode magit-svn json-mode js2-refactor js-comint jedi import-js iedit hy-mode helm graphviz-dot-mode google-maps gnuplot-mode gnuplot ghci-completion ghc fuzzy flymd flycheck-pos-tip ess-smart-underscore ess-smart-equals elisp-slime-nav csv-mode company-tern company-restclient company-jedi company-arduino company-anaconda color-theme coffee-mode calfw better-registers auto-complete-c-headers)))
+ '(projectile-project-root-files
+   (quote
+    ("rebar.config" "project.clj" "build.boot" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" ".projectile-root")))
  '(remember-annotation-functions (quote (org-remember-annotation)))
  '(remember-handler-functions (quote (org-remember-handler)))
  '(safe-local-variable-values
