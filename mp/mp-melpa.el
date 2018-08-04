@@ -13,7 +13,7 @@
   (package-refresh-contents))
 
 (defvar *used-packages* '(auto-complete clojure-mode color-theme dash ess fuzzy graphviz-dot-mode js2-mode js2-refactor magit multiple-cursors org org-bullets pastebin
-                                        popup s smart-compile tabbar undo-tree w3m yasnippet auto-complete-c-headers slime scpaste helm iedit better-registers web-mode restclient))
+                                        popup s smart-compile tabbar undo-tree w3m yasnippet auto-complete-c-headers slime scpaste helm iedit better-registers web-mode restclient imenu-anywhere))
 
 ;; check if the packages is installed; if not, install it.
 (mapc (lambda (package)

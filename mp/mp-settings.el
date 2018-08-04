@@ -238,7 +238,7 @@
 (setf select-active-regions nil)
 (setf mouse-drag-copy-region t)
 (setf x-select-enable-primary t)
-(setf x-select-enable-clipboard nil)
+(setf x-select-enable-clipboard t)
 
 (setf mouse-yank-at-click 'mouse-2)
 (setf x-select-enable-clipboard-manager nil)
@@ -311,7 +311,7 @@
 
 ;; grep
 ;; (grep-compute-defaults)
-(setq grep-command "grep -nH *.lisp -e \"\"")
+(setq grep-command "grep -iRnH ./ --exclude-dir=.git -e \"\"")
 
 (setq scroll-conservatively 10000
       scroll-step 1)
@@ -410,4 +410,6 @@
 (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 
 (windmove-default-keybindings)
+
+(setq projectile-globally-ignored-directories '(".deprecated"))
 (provide 'mp-settings)
