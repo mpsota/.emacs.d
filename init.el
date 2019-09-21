@@ -63,7 +63,7 @@
 (require 'mp-clojure)
 ;; (require 'mp-php)
 ;; (require 'mp-erlang)
-(require 'mp-python)
+; (require 'mp-python)
 
 (require 'mp-c-c++)
 ;; (require 'mp-erc)
@@ -71,8 +71,10 @@
 (require 'light-symbol)
 (light-symbol-mode t)
 
-(require 'ess-site)
-(require 'ess-eldoc)
+
+;(require 'ess-site)
+;(require 'ess-eldoc)
+
 (require 'auto-complete)
 
 (require 'graphviz-dot-mode)
@@ -161,10 +163,7 @@
  '(org-reverse-note-order t)
  '(package-selected-packages
    (quote
-    (cider projectile imenu-anywhere imenu-list web-mode w3m undo-tree tabbar smart-compile slime-company scpaste recentf-ext php-mode pastebin org-bullets ob-cypher nvm nodejs-repl neotree monky markdown-mode magit-svn json-mode js2-refactor js-comint jedi import-js iedit hy-mode helm graphviz-dot-mode google-maps gnuplot-mode gnuplot ghci-completion ghc fuzzy flymd flycheck-pos-tip ess-smart-underscore ess-smart-equals elisp-slime-nav csv-mode company-tern company-restclient company-jedi company-arduino company-anaconda color-theme coffee-mode calfw better-registers auto-complete-c-headers)))
- '(projectile-project-root-files
-   (quote
-    ("rebar.config" "project.clj" "build.boot" "SConstruct" "pom.xml" "build.sbt" "gradlew" "build.gradle" ".ensime" "Gemfile" "requirements.txt" "setup.py" "tox.ini" "composer.json" "Cargo.toml" "mix.exs" "stack.yaml" "info.rkt" "DESCRIPTION" "TAGS" "GTAGS" ".projectile-root")))
+    (plantuml-mode company-flx flx company cider window-numbering web-mode w3m undo-tree tabbar smart-compile slime-company scpaste recentf-ext projectile php-mode pastebin org-bullets ob-cypher nvm nodejs-repl neotree monky markdown-mode magit-svn json-mode js2-refactor js-comint jedi import-js iedit hy-mode helm graphviz-dot-mode gnuplot-mode gnuplot ghci-completion ghc fuzzy flymd flycheck-pos-tip ess-smart-underscore ess-smart-equals elisp-slime-nav csv-mode company-tern company-restclient company-jedi company-anaconda color-theme coffee-mode clojure-mode calfw better-registers auto-complete-c-headers)))
  '(remember-annotation-functions (quote (org-remember-annotation)))
  '(remember-handler-functions (quote (org-remember-handler)))
  '(safe-local-variable-values

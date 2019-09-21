@@ -53,10 +53,4 @@
       ad-do-it)
     ad-do-it))
 
-;(add-hook 'coffee-mode-hook
-;          (lambda ()
-;            (set (make-local-variable 'tab-width) 2)
-;            (set (make-local-variable 'indent-tabs-mode) t)))
-
-(custom-set-variables '(coffee-tab-width 2))
 (provide 'mp-web)

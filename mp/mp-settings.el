@@ -412,4 +412,41 @@
 (windmove-default-keybindings)
 
 (setq projectile-globally-ignored-directories '(".deprecated"))
+
+;; freeze some buffers, so nothing steals them
+
+(defadvice pop-to-buffer (before cancel-other-window first)
+  (ad-set-arg 1 nil))
+
+(ad-activate 'pop-to-buffer)
+
+;; Toggle window dedication
+(defun toggle-window-dedicated ()
+  "Toggle whether the current active window is dedicated or not"
+  (interactive)
+  (message
+   (if (let (window (get-buffer-window (current-buffer)))
+         (set-window-dedicated-p window
+                                 (not (window-dedicated-p window))))
+       "Window '%s' is dedicated"
+     "Window '%s' is normal")
+   (current-buffer)))
+
+;; Press [pause] key in each window you want to "freeze"
+(global-set-key [pause] 'toggle-window-dedicated)
+(windmove-default-keybindings)
+
+(setq window-numbering-assign-func
+      (lambda () (when (equal (buffer-name) "*slime-repl sbcl") 9)))
+
+(window-numbering-mode 1)
+
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(with-eval-after-load 'company
+      (add-hook 'company-mode-hook (lambda ()
+                                     (add-to-list 'company-backends 'company-capf)))
+      (company-flx-mode +1))
+
 (provide 'mp-settings)

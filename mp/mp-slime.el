@@ -6,12 +6,11 @@
 (setq inferior-lisp-program "sbcl")
 (setq slime-contribs '(slime-fancy slime-company))
 
-(slime-setup '(slime-fancy slime-company))
-
 (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
 (setq slime-lisp-implementations '())
 (add-to-list 'slime-lisp-implementations '(ccl ("ccl")))
 (add-to-list 'slime-lisp-implementations '(lw ("lw-console")))
+
 (add-to-list 'slime-lisp-implementations '(lw2 ("/usr/local/lib64/LispWorks/lispworks-7-0-0-amd64-linux")))
 (add-to-list 'slime-lisp-implementations '(abcl ("~/.software/abcl-bin-1.3.3/abcl.jar")))
 (add-to-list 'slime-lisp-implementations '(sbcl ("sbcl" "--control-stack-size" "400" "--dynamic-space-size" "8000")))
@@ -19,10 +18,10 @@
 
 ;(slime-setup)
 ;; (slime-setup '(slime-fancy ));;slime-asdf slime-tramp
-(define-key company-active-map (kbd "\C-n") 'company-select-next)
-(define-key company-active-map (kbd "\C-p") 'company-select-previous)
-(define-key company-active-map (kbd "\C-d") 'company-show-doc-buffer)
-(define-key company-active-map (kbd "M-.") 'company-show-location)
+;(define-key company-active-map (kbd "\C-n") 'company-select-next)
+;(define-key company-active-map (kbd "\C-p") 'company-select-previous)
+;(define-key company-active-map (kbd "\C-d") 'company-show-doc-buffer)
+;(define-key company-active-map (kbd "M-.") 'company-show-location)
 
 (defvar *my-server*
  "/ssh:fractal1:")
@@ -30,16 +29,6 @@
 (defun server-home()
   (interactive)
   (find-file (concat *my-server* "~/")))
-
-;; (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
-
-;;(add-hook 'slime-connected-hook
-;;          (lambda ()
-;;            ))
-
-;; Common Lisp Mode
-;;(add-to-list 'auto-mode-alist '("\\.lisp$" . lisp-mode))
-
 
 (make-directory "/tmp/slime-fasls/" t)
 
@@ -137,7 +126,6 @@
   (interactive)
   (slime 'abcl))
 
-;; (:ql :log4slime) (log4slime:install)  is needed by log4slime mode
 
 
 (defun toggle-current-window-dedication ()
@@ -181,13 +169,31 @@
 (add-hook 'lisp-mode-hook ;; remove trailing whitespaces before save.
           (lambda () (add-to-list 'write-file-functions 'delete-trailing-whitespace)))
 
-;; (global-set-key [tab] 'company-complete)
-;; (define-key company-active-map (kbd "<tab>") 'company-complete)
 
-(setq log4slime-mode nil) ;; hack, log4slime references to free variable
+;; (:ql :log4slime) (log4slime:install)  is needed by log4slime mode
+
+(setq log4slime-mode nil)  ;; hack, log4slime references to free variable
 (load "~/quicklisp/log4slime-setup.el")
 (global-log4slime-mode 1)
 
+;; (global-set-key [tab] 'company-complete)
+;; (define-key company-active-map (kbd "<tab>") 'company-complete)
+
 (setq pop-up-windows t)
 (setq same-window-buffer-names '("*inferior-lisp*" "*slime-xref*"))
+
+
+
+
+
+
+
+
+
+(add-hook 'cider-repl-mode-hook #'company-mode)
+(add-hook 'cider-mode-hook #'company-mode)
+; (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+(add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
+(add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
+
 (provide 'mp-slime)

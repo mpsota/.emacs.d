@@ -140,13 +140,13 @@
                        ("\\subsection{%s}" . "\\subsection*{%s}")
                        ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
         (add-to-list 'org-export-latex-classes
-                     '("my-report" "\\documentclass[11pt]{report}" 
-                                        ;("\\part{%s}" . "\\part*{%s}") 
-                       ("\\chapter{%s}" . "\\chapter*{%s}") 
+                     '("my-report" "\\documentclass[11pt]{report}"
+                                        ;("\\part{%s}" . "\\part*{%s}")
+                       ("\\chapter{%s}" . "\\chapter*{%s}")
                        ("\\section{%s}" . "\\section*{%s}")
                        ("\\subsection{%s}" . "\\subsection*{%s}")
                        ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-	       
+
 
                        ))
         (add-to-list 'org-export-latex-classes
@@ -165,9 +165,9 @@
                        ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
         ))
 (setq org-export-latex-title-command "ble")
-  
-             
-             ;  
+
+
+             ;
              ;  ))
 
 
@@ -239,7 +239,7 @@
 
 (add-hook 'org-mode-hook 'org-mode-reftex-setup)
 ;(LaTeX-command "latex -shell-escape")
-(eval-after-load "tex" 
+(eval-after-load "tex"
   '(setcdr (assoc "LaTeX" TeX-command-list)
           '("%`%l%(mode) -shell-escape%' %t"
           TeX-run-TeX nil (latex-mode doctex-mode) :help "Run LaTeX")
@@ -304,7 +304,20 @@
 ;; active Babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((gnuplot . t)))
+ '((gnuplot . t)
+   (emacs-lisp . t)
+     (clojure . t)
+     (plantuml . t)))
 ;; add additional languages with '((language . t)))
+
+(add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
+(setq org-confirm-babel-evaluate nil)
+
+;; plantuml for org
+(setq org-plantuml-jar-path "~/.software/plantuml.jar")
+
+
+(setq-default plantuml-output-type "png")
+(setq-default plantuml-jar-path (expand-file-name "~/.software/plantuml.jar"))
 
 (provide 'mp-org)

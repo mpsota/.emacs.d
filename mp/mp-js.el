@@ -12,7 +12,9 @@
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx$" . js2-mode))
 (require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
+
+; (add-hook 'after-init-hook 'global-company-mode)
+
 
 (eval-after-load 'company
   '(add-to-list 'company-backends 'company-tern))
